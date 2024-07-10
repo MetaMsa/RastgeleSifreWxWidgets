@@ -1,0 +1,22 @@
+cmake_minimum_required(VERSION 3.23)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+project(graphic VERSION 1.0)
+
+set(wxWidgets_ROOT_DIR "wxWidgets")
+
+find_package(wxWidgets REQUIRED gl core base)
+
+add_executable(graphic WIN32 main.cpp)
+
+if(wxWidgets_FOUND)
+    include(${wxWidgets_USE_FILE})
+    target_include_directories(graphic PUBLIC ${wxWidgets_INCLUDE_DIRS})
+    target_compile_definitions(graphic PUBLIC ${wxWidgets_DEFINITIONS})
+    target_compile_options(graphic PRIVATE ${wxWidgets_CXX_FLAGS})
+    target_link_libraries(graphic ${wxWidgets_LIBRARIES})
+else()
+    message("wxWidgets not found!")
+endif()
